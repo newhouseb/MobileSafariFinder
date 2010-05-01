@@ -1,27 +1,56 @@
 <html>
   <head>
     <title>Apache Sandbox</title>
+    <style type="text/css">
+    .highlight {
+      background-color: yellow;
+    }
+    </style>
     <script type="text/javascript">
 
 var existingTerm = null;
 
 function search(term) {
     var regex = new RegExp(term, "g");
-    var old_regex = null;
-    if(existingTerm)
-      old_regex = new RegExp("\\["+existingTerm+"\\]", "g");
     var recurser = function(el){
+	// If the node is text
         if ((el.nodeType == 3)||(el.nodeName =="BR")) {
-	    if(existingTerm)
-	      el.nodeValue = el.nodeValue.replace(old_regex, existingTerm);
-	    if(term)
-	      el.nodeValue = el.nodeValue.replace(regex, "["+term+"]");
-        } else
-            for (var i=0; i < el.childNodes.length; ++i)
-                recurser(el.childNodes[i]);
+	  // Search for the object
+	  var position = el.nodeValue.search(regex);
+	
+	  // If found and this isn't a highlight
+	  if(position >= 0 && el.parentNode.className != "highlight") {
+
+	    // Create the highlight
+	    var highlight = document.createElement("span");
+	    highlight.className = "highlight";
+	    highlight.innerHTML = term;
+
+	    // Create the text after the highlight
+	    var postText = document.createTextNode(el.nodeValue.slice(position + term.length));
+
+	    // Trim text before the highlight
+	    el.nodeValue = el.nodeValue.slice(0, position);
+
+	    // Add it all together
+	    if(el.nextSibling) {
+	      el.parentNode.insertBefore(postText, el.nextSibling);
+	      el.parentNode.insertBefore(highlight, el.nextSibling);
+	    } else {
+	      el.parentNode.appendChild(highlight);
+	      el.parentNode.appendChild(postText);
+	      // Tell the caller we can skip two nodes
+	      return 1;
+	    }
+	  }
+        } else {
+          for (var i=0; i < el.childNodes.length; ++i) {
+            i += recurser(el.childNodes[i]);
+	  }
+	}
+	return 0;
     };
     recurser(document);
-    existingTerm = term;
 }
     </script>
   </head>
