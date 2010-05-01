@@ -11,7 +11,19 @@
 var existingTerm = null;
 
 function search(term) {
-    var regex = new RegExp(term, "g");
+    // Remove all previous highlight nodes
+    var highlights = document.getElementsByClassName('highlight');
+    for(var i = 0; i < highlights.length; i++) {
+      var el = highlights[i];
+      el.previousSibling.nodeValue += el.innerHTML + el.nextSibling.nodeValue;
+      el.parentNode.removeChild(el.nextSibling);
+      el.parentNode.removeChild(el);
+      i -= 1;
+    }
+
+    if(term == '') return;
+
+    var regex = new RegExp(term, "gi");
     var recurser = function(el){
 	// If the node is text
         if ((el.nodeType == 3)||(el.nodeName =="BR")) {
@@ -24,7 +36,7 @@ function search(term) {
 	    // Create the highlight
 	    var highlight = document.createElement("span");
 	    highlight.className = "highlight";
-	    highlight.innerHTML = term;
+	    highlight.innerHTML = el.nodeValue.substring(position, position + term.length);
 
 	    // Create the text after the highlight
 	    var postText = document.createTextNode(el.nodeValue.slice(position + term.length));
@@ -56,7 +68,7 @@ function search(term) {
   </head>
   <body>
     Apache Sandbox
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <p>one two three one two three one two three</p>
     <input onkeyup="search(document.getElementById('term').value);" id="term" />
     <button onclick="search(document.getElementById('term').value);">search</button>
   </body>
