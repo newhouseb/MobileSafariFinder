@@ -4,16 +4,66 @@
     <style type="text/css">
     .highlight {
       background-color: yellow;
-      -webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
-      -webkit-border-radius:5px;
       padding: 2px;
     }
 
     .focused {
-      font-weight: bold;
       padding: 5px;
-      border: 1px solid black;
+      -webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+      -webkit-border-radius:5px;
     }
+
+    #finder {
+      font-size: 13pt;
+      color: #6A7179;
+      position: fixed;
+      top: 0px;
+      left: 0px;
+      width: 100%;
+      background: -webkit-gradient(linear, left top, left bottom, from(#f5f5f7), to(#c1c3cf));
+      padding: 7px;
+      border-bottom: 1px solid #3f3f3f;
+    }
+
+    #finder button {
+      border: 1px solid #6A7179;
+      border-left: 0px solid #6a7179;
+      margin-left: 0px;
+      margin-right: 0px;
+    }
+
+    #finder input {
+      padding-left: 10px;
+      height: 30px;
+      border: 1px solid #6a7179;
+      margin-right: 10px;
+    }
+
+    input {
+      -webkit-border-radius:7px;
+      font-size: 13pt;
+    }
+
+    button {
+      font-size: 13pt;
+      -webkit-border-radius:15px;
+      background: -webkit-gradient(linear, left top, left bottom, from(#f5f5f7), to(#9fa1ab));
+      height: 30px;
+      color: #6a7179;
+    }
+
+    #findleft {
+      -webkit-border-top-right-radius: 0px;
+      -webkit-border-bottom-right-radius: 0px;
+      color: #6a7179;
+    }
+
+    #findright {
+      -webkit-border-top-left-radius: 0px;
+      -webkit-border-bottom-left-radius: 0px;
+      color: #6a7179;
+    }
+
     </style>
     <script type="text/javascript">
 
@@ -22,17 +72,21 @@ var highlightIndex = 0;
 var highlightCount = 0;
 
 function searchDown() {
-    highlightIndex = (highlightIndex + 1) % highlightCount;
-    focusHighlight();
-}
-
-function searchUp() {
     highlightIndex = (highlightCount + highlightIndex - 1) % highlightCount;
     focusHighlight();
-}
+};
+
+function searchUp() {
+    highlightIndex = (highlightIndex + 1) % highlightCount;
+    focusHighlight();
+};
 
 function focusHighlight() {
     var highlights = document.getElementsByClassName('highlight');
+    if(highlights.length == 0) {
+      document.getElementById('count').innerHTML = 'Not found';
+      return;
+    }
     
     var focused = document.getElementsByClassName('focused');
     for(var i = 0; i < focused.length; i++) {
@@ -40,8 +94,9 @@ function focusHighlight() {
     }
 
     highlights[highlightIndex].className = "highlight focused";
-    document.getElementById('count').innerHTML = '' + (highlightIndex + 1) + "/" + highlightCount;
-}
+    document.getElementById('count').innerHTML = '' + (highlightIndex + 1) + " of " + highlightCount;
+    highlights[highlightIndex].scrollIntoView();
+};
 
 function search(term) {
     // Remove all previous highlight nodes
@@ -97,19 +152,18 @@ function search(term) {
 	}
 	return 0;
     };
-    recurser(document);
+    recurser(document.body);
     highlightIndex = 0;
     highlightCount = count;
     focusHighlight();
-}
+};
     </script>
   </head>
   <body>
-    <input onkeyup="search(document.getElementById('term').value);" id="term" />
-    <button onclick="search(document.getElementById('term').value);">search</button>
-    <span id=count>0</span>
-    <button onclick="searchDown();">\/</button>
-    <button onclick="searchUp();">/\</button>
+    <div id=finder>
+      <span id=count></span><input onkeyup="search(document.getElementById('term').value);" id="term" /><button id=findleft onclick="searchDown();"> &#9664;</button><button id=findright onclick="searchUp();">&#9654;</button>
+      <button style="font-size: 14pt;" >Done</button>
+    </div>
     Apache Sandbox
     <p>one two three one two three one two three</p>
     <p>one two three one two three one two three</p>
