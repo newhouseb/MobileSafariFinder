@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <title>Apache Sandbox</title>
+    <script type="text/javascript">
+
+var existingTerm = null;
+
+function search(term) {
+    var regex = new RegExp(term, "g");
+    var old_regex = null;
+    if(existingTerm)
+      old_regex = new RegExp("\\["+existingTerm+"\\]", "g");
+    var recurser = function(el){
+        if ((el.nodeType == 3)||(el.nodeName =="BR")) {
+	    if(existingTerm)
+	      el.nodeValue = el.nodeValue.replace(old_regex, existingTerm);
+	    if(term)
+	      el.nodeValue = el.nodeValue.replace(regex, "["+term+"]");
+        } else
+            for (var i=0; i < el.childNodes.length; ++i)
+                recurser(el.childNodes[i]);
+    };
+    recurser(document);
+    existingTerm = term;
+}
+    </script>
+  </head>
+  <body>
+    Apache Sandbox
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <input onkeyup="search(document.getElementById('term').value);" id="term" />
+    <button onclick="search(document.getElementById('term').value);">search</button>
+  </body>
+</html>
