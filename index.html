@@ -8,10 +8,40 @@
       -webkit-border-radius:5px;
       padding: 2px;
     }
+
+    .focused {
+      font-weight: bold;
+      padding: 5px;
+      border: 1px solid black;
+    }
     </style>
     <script type="text/javascript">
 
-var existingTerm = null;
+// The index of highlight we've focused on
+var highlightIndex = 0;
+var highlightCount = 0;
+
+function searchDown() {
+    highlightIndex = (highlightIndex + 1) % highlightCount;
+    focusHighlight();
+}
+
+function searchUp() {
+    highlightIndex = (highlightCount + highlightIndex - 1) % highlightCount;
+    focusHighlight();
+}
+
+function focusHighlight() {
+    var highlights = document.getElementsByClassName('highlight');
+    
+    var focused = document.getElementsByClassName('focused');
+    for(var i = 0; i < focused.length; i++) {
+      focused[i].className = "highlight";
+    }
+
+    highlights[highlightIndex].className = "highlight focused";
+    document.getElementById('count').innerHTML = '' + (highlightIndex + 1) + "/" + highlightCount;
+}
 
 function search(term) {
     // Remove all previous highlight nodes
@@ -26,6 +56,7 @@ function search(term) {
 
     if(term == '') return;
 
+    var count = 0;
     var regex = new RegExp(term, "gi");
     var recurser = function(el){
 	// If the node is text
@@ -35,6 +66,7 @@ function search(term) {
 	
 	  // If found and this isn't a highlight
 	  if(position >= 0 && el.parentNode.className != "highlight") {
+	    count += 1;
 
 	    // Create the highlight
 	    var highlight = document.createElement("span");
@@ -66,13 +98,36 @@ function search(term) {
 	return 0;
     };
     recurser(document);
+    highlightIndex = 0;
+    highlightCount = count;
+    focusHighlight();
 }
     </script>
   </head>
   <body>
-    Apache Sandbox
-    <p>one two three one two three one two three</p>
     <input onkeyup="search(document.getElementById('term').value);" id="term" />
     <button onclick="search(document.getElementById('term').value);">search</button>
+    <span id=count>0</span>
+    <button onclick="searchDown();">\/</button>
+    <button onclick="searchUp();">/\</button>
+    Apache Sandbox
+    <p>one two three one two three one two three</p>
+    <p>one two three one two three one two three</p>
+    <p>one two three one two three one two three</p>
+    <p>one two three one two three one two three</p>
+    <p>one two three one two three one two three</p>
+    <p>one two three one two three one two three</p>
+    <p>one two three one two three one two three</p>
+    <p>one two three one two three one two three</p>
+    <p>one two three one two three one two three</p>
+    <p>one two three one two three one two three</p>
+    <p>one two three one two three one two three</p>
+    <p>one two three one two three one two three</p>
+    <p>one two three one two three one two three</p>
+    <p>one two three one two three one two three</p>
+    <p>one two three one two three one two three</p>
+    <p>one two three one two three one two three</p>
+    <p>one two three one two three one two three</p>
+    <p>one two four one two three one two three</p>
   </body>
 </html>
