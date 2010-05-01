@@ -16,7 +16,7 @@
     #finder {
       font-size: 13pt;
       color: #6A7179;
-      position: fixed;
+      position: absolute;
       top: 0px;
       left: 0px;
       width: 100%;
@@ -73,15 +73,15 @@ var highlightCount = 0;
 
 function searchDown() {
     highlightIndex = (highlightCount + highlightIndex - 1) % highlightCount;
-    focusHighlight();
+    focusHighlight(true);
 };
 
 function searchUp() {
     highlightIndex = (highlightIndex + 1) % highlightCount;
-    focusHighlight();
+    focusHighlight(true);
 };
 
-function focusHighlight() {
+function focusHighlight(scroll) {
     var highlights = document.getElementsByClassName('highlight');
     if(highlights.length == 0) {
       document.getElementById('count').innerHTML = 'Not found';
@@ -95,7 +95,11 @@ function focusHighlight() {
 
     highlights[highlightIndex].className = "highlight focused";
     document.getElementById('count').innerHTML = '' + (highlightIndex + 1) + " of " + highlightCount;
-    highlights[highlightIndex].scrollIntoView();
+
+    if(scroll) {
+      highlights[highlightIndex].scrollIntoView();
+      document.getElementById('finder').style.top = window.pageYOffset + "px";
+    }
 };
 
 function search(term) {
@@ -156,6 +160,12 @@ function search(term) {
     highlightIndex = 0;
     highlightCount = count;
     focusHighlight();
+};
+
+window.onload = function() {
+  document.addEventListener('scroll', function() {
+    document.getElementById('finder').style.top = window.pageYOffset + "px";
+  });
 };
     </script>
   </head>
