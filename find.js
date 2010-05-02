@@ -116,7 +116,15 @@ var iPadFinder = iPadFinder ? iPadFinder : {
       highlightCount = count;
       this.focusHighlight();
     },
+    hide: function() {
+	document.getElementById('ipadfinder_finder').style.display = "none";
+    },
     init: function() {
+      if(document.getElementById('ipadfinder_finder')) {
+	document.getElementById('ipadfinder_finder').style.display = "block";
+	return;
+      }
+
       var link = document.createElement('link');
       link.href="http://128.12.124.42/find.css";
       link.type="text/javascript";
@@ -125,7 +133,7 @@ var iPadFinder = iPadFinder ? iPadFinder : {
 
       var container = document.createElement('div');
       container.id = "ipadfinder_finder";
-      container.innerHTML = '<span onselectstart="return false;" id=ipadfinder_count></span> <input onkeyup="iPadFinder.search(document.getElementById(\'ipadfinder_term\').value);" id="ipadfinder_term" /><button id=ipadfinder_findleft onclick="iPadFinder.searchDown();"> &#9664;</button><button id=ipadfinder_findright onclick="iPadFinder.searchUp();">&#9654;</button> <button style="font-size: 14pt;" >Done</button>';
+      container.innerHTML = '<span onselectstart="return false;" id=ipadfinder_count></span> <input onkeyup="iPadFinder.search(document.getElementById(\'ipadfinder_term\').value);" id="ipadfinder_term" /><button id=ipadfinder_findleft onclick="iPadFinder.searchDown();"> &#9664;</button><button id=ipadfinder_findright onclick="iPadFinder.searchUp();">&#9654;</button> <button onclick="iPadFinder.hide();" style="font-size: 14pt;" >Done</button>';
       document.body.appendChild(container);
 
       document.addEventListener('scroll', function() {
