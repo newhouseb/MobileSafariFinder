@@ -4,13 +4,16 @@
     <style type="text/css">
     .highlight {
       background-color: yellow;
-      padding: 2px;
     }
 
     .focused {
       padding: 5px;
       -webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
       -webkit-border-radius:5px;
+    }
+
+    #count {
+      -webkit-user-select:none;
     }
 
     #finder {
@@ -23,6 +26,7 @@
       background: -webkit-gradient(linear, left top, left bottom, from(#f5f5f7), to(#c1c3cf));
       padding: 7px;
       border-bottom: 1px solid #3f3f3f;
+      -webkit-user-select:none;
     }
 
     #finder button {
@@ -71,6 +75,15 @@
 var highlightIndex = 0;
 var highlightCount = 0;
 
+function getScroll(el) {
+  var height = 0;
+  do {
+    height += el.offsetTop;
+  } while(el = el.offsetParent);
+  return height;
+}
+
+
 function searchDown() {
     highlightIndex = (highlightCount + highlightIndex - 1) % highlightCount;
     focusHighlight(true);
@@ -97,7 +110,8 @@ function focusHighlight(scroll) {
     document.getElementById('count').innerHTML = '' + (highlightIndex + 1) + " of " + highlightCount;
 
     if(scroll) {
-      highlights[highlightIndex].scrollIntoView();
+      //highlights[highlightIndex].scrollIntoView();
+      window.scrollTo(0, getScroll(highlights[highlightIndex]) - 70);
       document.getElementById('finder').style.top = window.pageYOffset + "px";
     }
 };
@@ -170,8 +184,8 @@ window.onload = function() {
     </script>
   </head>
   <body>
-    <div id=finder>
-      <span id=count></span><input onkeyup="search(document.getElementById('term').value);" id="term" /><button id=findleft onclick="searchDown();"> &#9664;</button><button id=findright onclick="searchUp();">&#9654;</button>
+    <div id=finder onselectstart="return false;">
+      <span onselectstart="return false;" id=count></span> <input onkeyup="search(document.getElementById('term').value);" id="term" /><button id=findleft onclick="searchDown();"> &#9664;</button><button id=findright onclick="searchUp();">&#9654;</button>
       <button style="font-size: 14pt;" >Done</button>
     </div>
     Apache Sandbox
