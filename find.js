@@ -39,6 +39,11 @@ function focusHighlight(scroll) {
     highlights[highlightIndex].className = "ipadfinder_highlight ipadfinder_focused";
     document.getElementById('ipadfinder_count').innerHTML = '' + (highlightIndex + 1) + " of " + highlightCount;
 
+    if(getScroll(highlights[highlightIndex]) < 60) {
+      document.getElementById('ipadfinder_finder').style.opacity = 0.7;
+    } else {
+      document.getElementById('ipadfinder_finder').style.opacity = 1.0;
+    }
     if(scroll) {
       //highlights[highlightIndex].scrollIntoView();
       window.scrollTo(0, getScroll(highlights[highlightIndex]) - 70);
@@ -63,7 +68,7 @@ function search(term) {
     var regex = new RegExp(term, "gi");
     var recurser = function(el){
 	// If the node is text
-        if ((el.nodeType == 3)) {
+        if ((el.nodeType == 3) && (el.nodeName != "script")) {
 	  // Search for the object
 	  var position = 0;
 	  if(el.nodeValue)
@@ -124,6 +129,8 @@ function init() {
   document.addEventListener('scroll', function() {
     document.getElementById('ipadfinder_finder').style.top = window.pageYOffset + "px";
   });
+  document.getElementById('ipadfinder_finder').style.top = window.pageYOffset + "px";
+  document.getElementById('ipadfinder_term').focus();
 };
 
 init();

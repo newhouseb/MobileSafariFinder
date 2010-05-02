@@ -13,6 +13,7 @@
     }
 
     #ipadfinder_finder {
+      z-index: 100000000;
       font-size: 13pt;
       color: #6A7179;
       position: absolute;
@@ -21,6 +22,7 @@
       width: 100%;
       background: -webkit-gradient(linear, left top, left bottom, from(#f5f5f7), to(#c1c3cf));
       padding: 7px;
+      text-align: left;
       border-bottom: 1px solid #3f3f3f;
       -webkit-user-select:none;
     }
