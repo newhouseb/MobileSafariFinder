@@ -1,0 +1,60 @@
+    .ipadfinder_highlight {
+      background-color: yellow;
+    }
+
+    .ipadfinder_focused {
+      padding: 5px;
+      -webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+      -webkit-border-radius:5px;
+    }
+
+    #ipadfinder_count {
+      -webkit-user-select:none;
+    }
+
+    #ipadfinder_finder {
+      font-size: 13pt;
+      color: #6A7179;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 100%;
+      background: -webkit-gradient(linear, left top, left bottom, from(#f5f5f7), to(#c1c3cf));
+      padding: 7px;
+      border-bottom: 1px solid #3f3f3f;
+      -webkit-user-select:none;
+    }
+
+    #ipadfinder_finder button {
+      border: 1px solid #6A7179;
+      border-left: 0px solid #6a7179;
+      margin-left: 0px;
+      margin-right: 0px;
+      font-size: 13pt;
+      -webkit-border-radius:15px;
+      background: -webkit-gradient(linear, left top, left bottom, from(#f5f5f7), to(#9fa1ab));
+      height: 30px;
+      color: #6a7179;
+    }
+
+    #ipadfinder_finder input {
+      padding-left: 10px;
+      height: 30px;
+      border: 1px solid #6a7179;
+      margin-right: 10px;
+      -webkit-border-radius:7px;
+      font-size: 13pt;
+    }
+
+    #ipadfinder_findleft {
+      -webkit-border-top-right-radius: 0px !important;
+      -webkit-border-bottom-right-radius: 0px !important;
+      color: #6a7179;
+    }
+
+    #ipadfinder_findright {
+      -webkit-border-top-left-radius: 0px !important;
+      -webkit-border-bottom-left-radius: 0px !important;
+      color: #6a7179;
+    }
+
