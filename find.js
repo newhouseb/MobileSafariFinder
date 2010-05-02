@@ -130,6 +130,7 @@ var iPadFinder = iPadFinder ? iPadFinder : {
     init: function() {
       if(document.getElementById('ipadfinder_finder')) {
 	document.getElementById('ipadfinder_finder').style.display = "block";
+	this.search(document.getElementById('ipadfinder_term').value);
 	return;
       }
 
