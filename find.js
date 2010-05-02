@@ -61,7 +61,11 @@ var iPadFinder = iPadFinder ? iPadFinder : {
 	i -= 1;
       }
 
-      if(term == '') return;
+      if(term == '') {
+	document.getElementById('ipadfinder_finder').style.opacity = 1.0;
+	document.getElementById('ipadfinder_count').innerHTML = '';
+	return;
+      }
 
       var count = 0;
       var regex = new RegExp(term, "gi");
