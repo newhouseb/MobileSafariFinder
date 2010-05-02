@@ -1,20 +1,12 @@
 <html>
   <head>
     <title>Apache Sandbox</title>
-  <script type="text/javascript">
-var dur = {
-  foo: 1,
-  bar: function() {
-    alert(foo);
-  }
-};
-
-dur.bar();
   </script>
   </head>
   <body>
     Apache Sandbox
   <a href="javascript:var e=function(){var el=document.createElement('script');el.type='text/javascript';el.src='http://128.12.124.42/find.js';document.body.appendChild(el);};e();">Find in this page</a><br />
+  <a href="javascript:var e=function(){var el=document.createElement('script');el.type='text/javascript';el.src='http://128.12.124.42/minifind.js';document.body.appendChild(el);};e();">Minifind in this page</a><br />
   <textarea>javascript:var e=function(){var el=document.createElement('script');el.type='text/javascript';el.src='http://128.12.124.42/find.js';document.body.appendChild(el);};e();</textarea>
     <p>one two three one two three one two three</p>
     <p>one two three one two three one two three</p>

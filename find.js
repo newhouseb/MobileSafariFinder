@@ -50,7 +50,7 @@ var iPadFinder = iPadFinder ? iPadFinder : {
 	document.getElementById('ipadfinder_finder').style.top = window.pageYOffset + "px";
       }
     },
-    search: function(term) {
+    clear: function() {
       // Remove all previous highlight nodes
       var highlights = document.getElementsByClassName('ipadfinder_highlight');
       for(var i = 0; i < highlights.length; i++) {
@@ -60,6 +60,9 @@ var iPadFinder = iPadFinder ? iPadFinder : {
 	el.parentNode.removeChild(el);
 	i -= 1;
       }
+    },
+    search: function(term) {
+      this.clear();
 
       if(term == '') {
 	document.getElementById('ipadfinder_finder').style.opacity = 1.0;
@@ -121,6 +124,7 @@ var iPadFinder = iPadFinder ? iPadFinder : {
       this.focusHighlight();
     },
     hide: function() {
+	this.clear();
 	document.getElementById('ipadfinder_finder').style.display = "none";
     },
     init: function() {
